@@ -1,0 +1,37 @@
+
+
+<% layout("/layout/boilerplate") %>
+<body>
+
+   <b class="text-success"><%=successMsg%></b> 
+   <b class="text-success"><%=updateMsg%></b>
+   <b class="text-success"><%=deleteMsg%></b> 
+   <b class="text-danger"><%=errorMsg%></b> 
+
+    <h2 mt-3>User Data</h2>
+    <form method="GET" action="/listing/new">
+        <!-- <button>Add Listing</button> -->
+    </form>  
+    
+        <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-2 ">
+     <%for(let user of data){ %>
+        <a href="/listing/<%=user._id%>" class="underline">
+        <div class="card  " >
+            <img src="<%=user.image%>" class="card-img-top"  alt="image" style="height:18rem">
+            <div class="card-img-overlay"></div>
+            <div class="card-body">
+              <p class="card-text"><b><%=user.title%></b><br>
+                &#8377;<%= user.price %>/night</p>
+              </div>
+          </div>
+          </a>
+          <% } %>
+        </div>
+<!-- 
+    <%for(let user of data){ %>
+        
+            <li><a href="/listing/<%= user._id %>"> <%= user.title %></a></li>
+        
+        <% } %></ul> -->
+</body>
+<!-- </html> -->

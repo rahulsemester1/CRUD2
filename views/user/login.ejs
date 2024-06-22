@@ -1,0 +1,60 @@
+<% layout("/layout/boilerplate") %>
+ <b class="text-danger"><%=errorMsg%></b> 
+<div class="row" >
+    <div class="col-6 offset-3 mt-2">      
+        <!-- offset-2: This class specifies that the element should be offset by 2 columns to the right. 
+        This means that there will be a 2-column wide space to the left of the element. -->
+        
+        
+    <h3><u>Login on Willy-Wonka</u></h3>
+    <form method="post" action="/api/login" class="needs-validation" novalidate>
+
+        <div >
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" required class="form-control"  id="username" />
+        <div class="invalid-feedback">
+          Please enter Username.
+        </div>
+        </div>
+       
+
+          <div >
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" required class="form-control"  id="password" />
+            <div class="invalid-feedback">
+              Please enter Password.
+            </div>
+            </div>
+        
+          </br></br>
+          <button type="submit" class="btn btn-success" >Submit</button>
+          </form>
+
+
+          <script>
+        
+            (() => {
+                'use strict'
+              
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+              
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                  form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                      event.preventDefault()
+                      event.stopPropagation()
+                    }
+              
+                    form.classList.add('was-validated')
+                  }, false);
+                });
+              })();
+          </script>
+       </body>
+                
+     </div>
+   </div>
+                
+                

@@ -1,0 +1,53 @@
+body{
+    font-family: "Noto Sans Shavian", sans-serif !important;
+   }
+
+.navbar{
+    height:4rem;
+    background-color:rgb(254, 254, 254);
+  }
+.nav-link{
+    color:rgba(56, 17, 17, 0.947) !important;
+}
+.collapse{
+    background-color:rgb(254, 254, 254);
+}
+.navbar-brand{
+    color:rgba(56, 17, 17, 0.947) !important;
+}
+.card{
+    border:none !important;
+    margin-bottom: 3rem !important;
+   
+}
+.card-img-top{
+    border-radius: 1rem !important;
+}
+.card-body{
+    padding:0.5rem !important;
+    /* text-decoration: none  !important; */
+}
+.underline{
+    text-decoration: none ;
+}
+
+.card-img-overlay:hover{
+    background-color: white;
+    opacity:0.2;
+}
+
+.highlight {
+    margin-top:1.2rem;
+}
+.list{
+    height:40vh;
+    width:40vw !important;
+    padding:0;
+    margin-top: 0;
+
+}
+ .btns{
+    display:flex;
+    justify-content: left;
+    /* align-items:center ; */
+} 

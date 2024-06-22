@@ -1,0 +1,97 @@
+<% layout("/layout/boilerplate") %>
+
+<div class="row" >
+    <div class="col-8 offset-2">      
+        <!-- offset-2: This class specifies that the element should be offset by 2 columns to the right. 
+        This means that there will be a 2-column wide space to the left of the element. -->
+        
+        
+    <h3>Add New Listing</h3>
+    <form method="POST" action="/listing" class="needs-validation" novalidate enctype="multipart/form-data">
+        <div>
+            <label for="title" class="form-label">Title</label>
+        <input type="text" name="list[title]" class="form-control" required placeholder="enter title" id="title" />
+        <div class="invalid-feedback">
+            Please enter valid Title.
+          </div>
+          <div class="valid-feedback">
+            Title Looks Good.
+          </div>
+        </div>
+        
+    
+    <div>
+        <label for="description" class="form-label">Description</label>
+        <textarea name="list[description]" required class="form-control"></textarea>
+        <div class="invalid-feedback">
+            Please enter valid Description.
+          </div>
+          
+    </div>
+       
+
+
+    <div>
+      <label for="image" class="form-label">Upload Image</label>
+      <input type="file" name="list[image]" class="form-control"  />
+  </div>
+   
+    <div class="row">
+        <div class="col-md-4">
+        <label for="price" class="form-label" >Price</label>
+        <input type="number" name="list[price]" class="form-control"  placeholder="₹" required /> 
+        <div class="invalid-feedback">
+            Please enter valid Price.
+          </div>
+          
+        </div>
+    
+    
+    <div class="col-md-8">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" name="list[location]" class="form-control" required/>  
+        <div class="invalid-feedback">
+            Please enter valid Location.
+          </div>
+           
+    </div>
+</div>
+   
+   <div>
+    <label for="country" class="form-label">Country</label>
+    <input type="text" name="list[country]" class="form-control" placeholder="India" required/>
+    <div class="invalid-feedback">
+        Please enter valid Country.
+      </div>
+      
+   </div>
+   
+    </br></br>
+    <button type="submit" class="btn btn-primary" >Add</button>
+    </form>
+    <!-- <script src="/js/script.js"></script>  -->
+    
+    <script>
+        
+(() => {
+    'use strict'
+  
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+  
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+  
+        form.classList.add('was-validated')
+      }, false);
+    });
+  })();
+    </script>
+</body>
+ </div>
+</div>
