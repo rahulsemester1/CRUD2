@@ -7,7 +7,7 @@ main().then(()=>{
 }).catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
+  await mongoose.connect('mongodb+srv://user2000:rarashna5@cluster0.qofttry.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 }
 
 

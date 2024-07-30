@@ -19,11 +19,11 @@ router.post("/signup",async(req,res)=>{
         if(err){
             console.log(err.message);
         }
-        req.flash("success","Welcome to Willy-Wonka");
+        req.flash("success",`Welcome ${req.user.username} to Willy-Wonka`);
         res.redirect("/listing");
     });
        
-    }catch(error){
+    }catch(error){                        //error if user already exists
          req.flash("error",error.message);
         res.redirect("/api/signup");   
        }
@@ -39,12 +39,12 @@ router.post("/signup",async(req,res)=>{
     async(req,res)=>{
         console.log(req.user);
         console.log(req.session);
-        req.flash("success","Welcome back to Willy-Wonka");
+        req.flash("success",`Welcome ${req.user.username}  to Willy-Wonka`);
         let value=res.locals.redirectUrl || "/listing";
         res.redirect(value);
  });
 
-
+// Logout
  router.get("/logout",(req,res)=>{
     
     req.logout((err)=>{

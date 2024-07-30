@@ -38,7 +38,7 @@ const store=MongoStore.create({
   },
   touchAfter:24*3600,
 });
-app.use(session({store,secret:process.env.SECRET,resave:false,saveUninitialized:true}));
+app.use(session({store,secret:process.env.SECRET,resave:false,saveUninitialized:true}));     //session MW
 
 
 
@@ -49,7 +49,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use((req,res,next)=>{                      //for flash package
+app.use((req,res,next)=>{                      // Global MW for flash package
   res.locals.successMsg=req.flash("success");
   res.locals.updateMsg=req.flash("update");
   res.locals.deleteMsg=req.flash("delete");
@@ -57,24 +57,7 @@ app.use((req,res,next)=>{                      //for flash package
   res.locals.currentUser=req.user; 
   next();
 });
-// app.get("/api/recount",(req,res)=>{
 
-//   let{name="anonymous"}=req.query;
-//   req.session.name=name;
-  // if( req.session.count){
-  //   req.session.count++;
-  // }else{
-  //   req.session.count=7; 
-    // req.session
-  // }
-  // res.send(`Welcome ${req.session.name}`);
-  // console.log(req.session);
-  //   res.redirect("/api/view");
-    // res.send(`Client hit session for ${req.session.count} times`);
-    // console.log(req.session);
-    // res.redirect("/api/view");
-// }
-// );
 
 
 
@@ -113,29 +96,53 @@ app.post("/listing",upload.single("list[image]"),async(req,res,next)=>{
     }
     else{
       const user=new Listing(req.body.list);
-      let url=req.file.path;
-      let filename=req.file.filename;
-      user.image=url;
+      if(typeof req.file !=="undefined"){
+        let url=req.file.path;
+        let filename=req.file.filename
+        user.image=url;
+      }else
+      {
+        url="https://img.freepik.com/free-photo/nature-beauty-reflected-tranquil-mountain-lake-generative-ai_188544-12625.jpg?t=st=1717316160~exp=1717319760~hmac=7493cfa55f86902fb24167054df3cfc365ce86f1ecaec6d5fd33833eafcbf5a6&w=1060";
+        user.image=url;
+      }
+
+
       await user.save();
       req.flash("success","New Listing created");
       res.redirect("/listing"); 
-    // try{
-    //   if(!req.body.list){
-    //     next(new ExpressError(400,"Wrong Request"));
-    //   }else{
-    //     console.log({...req.body.list});
-    //     const price=req.body.list.price;
-    //     if(price<="0"){
-    //      next(new ExpressError(422,"Data Must be larger than 0")); 
-    //     }else{
-          //  const user=new Listing(req.body.list);
-          //  await user.save();
-          //  res.redirect("/listing"); 
-    //    }}catch(err){
-    //     next(err);
-    //  }
+
+
+
+      // app.use((req,res,next)=>{                      //for flash package
+      //   res.locals.successMsg=req.flash("success");
+      //   res.locals.updateMsg=req.flash("update");
+      //   res.locals.deleteMsg=req.flash("delete");
+      //   res.locals.errorMsg=req.flash("error");           //when deleted user address is again entered into address bar 
+      //   res.locals.currentUser=req.user; 
+      //   next();
+      // });
     }
+    // app.use((err,req,res,next)=>{
+    //   // res.send(err);
+    //   let {status=500,message}=err;
+    //   res.status=err.status;
+    //   res.render("listing/error.ejs",{status,message});
+    //   console.log(err.status,message);
+    // });
   });
+  // app.post("/listing",upload.single("list[image]"),async(req,res,next)=>{                
+  //   let result=listSchema.validate(req.body);
+  //     if(result.error){
+  //       next(new ExpressError(400,result.error.details[0].message));
+  //     }
+  //     else{
+  //       const user=new Listing(req.body.list);
+  //       let url=req.file.path;
+  //       let filename=req.file.filename;
+  //       user.image=url;
+  //       await user.save();
+  //       req.flash("success","New Listing created");
+  //       res.redirect("/listing"); 
 
 
 
@@ -162,13 +169,15 @@ app.get("/listing/:id",async(req,res,next)=>{
 app.get("/listing/:id/edit",isLoggedIn,async(req,res,)=>{
 let {id}=req.params;
 let data=await Listing.findById(id);
-if(!data){
-  next(new ExpressError(404,"Chat not found"));
-}else{
+
+ if(!data){
+  req.flash("error","Requested Listing Does not Exist! ");
+  res.redirect("/listing");
+   }
+else{
   res.render("listing/edit.ejs",{data});
  }
 });
-
 
 
 //Edit Route
@@ -183,6 +192,7 @@ app.put("/listing/:id/edit",async(req,res,next)=>{
     await Listing.findByIdAndUpdate(id,{...req.body.list});
     req.flash("update","Listing Updated!");
     res.redirect("/listing"); 
+    
  }
 //   try{
 //   if(!req.body.list){
@@ -206,7 +216,7 @@ app.put("/listing/:id/edit",async(req,res,next)=>{
 app.delete("/listing/:id/delete",isLoggedIn,async(req,res)=>{
   let id=req.params.id;
   let delListing=await Listing.findByIdAndDelete(id);
-  req.flash("delete","Listing Deleted!");
+  req.flash("delete",`Listing Deleted! `);
   res.redirect("/listing");
 });
 

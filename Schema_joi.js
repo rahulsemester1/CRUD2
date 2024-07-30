@@ -7,6 +7,6 @@ module.exports.listSchema=joi.object({
         price:joi.number().required().min(100) ,
         location:joi.string().required(),
         country:joi.string().required(),
-        image:joi.string().allow("",null),
+        image:joi.string().allow("",null)
     }).required()
 });
